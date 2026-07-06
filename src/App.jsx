@@ -15,13 +15,15 @@ function App() {
   const [turmaSelecionada, setTurmaSelecionada] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/alunos")
-      .then((res) => res.json())
-      .then(setAlunos);
+    // fetch("http://localhost:5000/api/alunos")
+    //   .then((res) => res.json())
+    //   .then(setAlunos);
 
-    fetch("http://localhost:5000/api/turmas")
-      .then((res) => res.json())
-      .then(setTurmas);
+    // fetch("http://localhost:5000/api/turmas")
+    //   .then((res) => res.json())
+    //   .then(setTurmas);
+    setAlunos([])
+    setTurmas([])
   }, []); // [] = roda só uma vez, ao montar o componente
 
   const alunosFiltrados = alunos

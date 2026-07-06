@@ -3,8 +3,9 @@ export default function FiltroTurma({ turmas, selecionada, onChange }) {
     <select
       value={selecionada}
       onChange={(e) => onChange(e.target.value)}
-      className="w-full sm:w-56 rounded-lg border border-gray-300 px-4 py-2 text-sm
-                 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+      className="w-full sm:w-64 rounded-md border border-slate-300 bg-white px-4 py-2
+                 text-sm text-slate-700 shadow-sm
+                 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
     >
       <option value="">Todas as turmas</option>
       {turmas.map((t) => (

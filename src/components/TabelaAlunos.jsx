@@ -27,14 +27,13 @@ function getComparator(order, orderBy) {
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-// aqui é a troca principal: as colunas viram variáveis do domínio do projeto
 const headCells = [
-  { id: 'nome', numeric: false, disablePadding: true, label: 'Nome' },
-  { id: 'email', numeric: false, disablePadding: false, label: 'E-mail' },
-  { id: 'nome_turma', numeric: false, disablePadding: false, label: 'Turma' },
-  { id: 'turno', numeric: false, disablePadding: false, label: 'Turno' },
-  { id: 'data_matricula', numeric: false, disablePadding: false, label: 'Matrícula' },
-  { id: 'media', numeric: true, disablePadding: false, label: 'Média' },
+  { id: 'nome',           label: 'Nome',      numeric: false, disablePadding: true,  hidden: null },
+  { id: 'email',          label: 'E-mail',    numeric: false, disablePadding: false, hidden: { xs: 'none', md: 'table-cell' } },
+  { id: 'nome_turma',     label: 'Turma',     numeric: false, disablePadding: false, hidden: { xs: 'none', sm: 'table-cell' } },
+  { id: 'turno',          label: 'Turno',     numeric: false, disablePadding: false, hidden: { xs: 'none', md: 'table-cell' } },
+  { id: 'data_matricula', label: 'Matrícula', numeric: false, disablePadding: false, hidden: { xs: 'none', sm: 'table-cell' } },
+  { id: 'media',          label: 'Média',     numeric: true,  disablePadding: false, hidden: null },
 ];
 
 function CabecalhoTabela({ order, orderBy, onRequestSort }) {
@@ -49,6 +48,7 @@ function CabecalhoTabela({ order, orderBy, onRequestSort }) {
             align={headCell.numeric ? 'right' : 'left'}
             padding={headCell.disablePadding ? 'none' : 'normal'}
             sortDirection={orderBy === headCell.id ? order : false}
+            sx={headCell.hidden ? { display: headCell.hidden } : {}}
           >
             <TableSortLabel
               active={orderBy === headCell.id}
@@ -107,14 +107,14 @@ export default function TabelaAlunos({ alunos }) {
 
   return (
     <Box sx={{ width: '100%' }}>
-      <Paper sx={{ width: '100%', mb: 2 }}>
+      <Paper sx={{ width: '100%', mb: 2, borderRadius: 2, overflow: 'hidden' }}>
         <Toolbar sx={{ pl: { sm: 2 }, pr: { xs: 1, sm: 1 } }}>
           <Typography sx={{ flex: '1 1 100%' }} variant="h6" component="div">
             Alunos matriculados
           </Typography>
         </Toolbar>
-        <TableContainer>
-          <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
+        <TableContainer sx={{ overflowX: 'auto' }}>
+          <Table aria-labelledby="tableTitle">
             <CabecalhoTabela
               order={order}
               orderBy={orderBy}
@@ -126,10 +126,16 @@ export default function TabelaAlunos({ alunos }) {
                   <TableCell component="th" scope="row" padding="none">
                     {aluno.nome}
                   </TableCell>
-                  <TableCell>{aluno.email}</TableCell>
-                  <TableCell>{aluno.nome_turma}</TableCell>
-                  <TableCell>{aluno.turno}</TableCell>
-                  <TableCell>
+                  <TableCell sx={{ display: { xs: 'none', md: 'table-cell' } }}>
+                    {aluno.email}
+                  </TableCell>
+                  <TableCell sx={{ display: { xs: 'none', sm: 'table-cell' } }}>
+                    {aluno.nome_turma}
+                  </TableCell>
+                  <TableCell sx={{ display: { xs: 'none', md: 'table-cell' } }}>
+                    {aluno.turno}
+                  </TableCell>
+                  <TableCell sx={{ display: { xs: 'none', sm: 'table-cell' } }}>
                     {new Date(aluno.data_matricula).toLocaleDateString('pt-BR')}
                   </TableCell>
                   <TableCell
